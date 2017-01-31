@@ -1,0 +1,9 @@
+﻿@model WebApplication.ViewModels.ImageViewModel
+
+<div class="img-responsive" style="margin-top: 3%">
+    @if (Model != null)
+    {
+        <img src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(@Model.Image))" alt="image" 
+             style="margin-left: 30%; width: 40%"/>
+    }
+</div>

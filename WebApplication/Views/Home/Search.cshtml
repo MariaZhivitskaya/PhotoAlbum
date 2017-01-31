@@ -1,0 +1,32 @@
+﻿@model WebApplication.ViewModels.SearchViewModel
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+<div class="row text-center">
+    <div class="form-group">
+        <label>Select the user's email:</label>
+        @using (Html.BeginForm())
+        {
+            @Html.DropDownListFor(m => m.SelectedEmail, Model.Users, new { @id = "list" })
+        }
+        <input type="button" class="btn btn-primary" value="Search" onclick="func()" style="margin-top: 1%; margin-bottom: 2%">
+    </div>
+</div>
+    <div id="results"></div>
+
+@section Scripts
+{
+    <script>
+        function func() {
+            var value = $('#list').val();
+           
+            var url = '@Url.Action("SearchResults", "Home", new { selectedEmail = -1 })';
+            url = url.replace(-1, value);
+            $("#results").load(url);
+        }
+    </script>
+}

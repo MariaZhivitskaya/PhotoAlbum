@@ -1,0 +1,75 @@
+﻿@model IEnumerable<WebApplication.ViewModels.ImageViewModel>
+@{
+    ViewBag.Title = "Photos";
+}
+
+<h2>My photos</h2>
+
+<div class="row text-center">
+    <label class="btn btn-primary btn-file upload_btn">
+        Upload photo
+        <input type="file" name="upload" id="uploadFile" class="hidden">
+    </label>
+</div>
+<div class="img-responsive" style="margin-top: 10%">
+    @foreach (var item in Model)
+    {
+        <div class="form-group" style="margin-top: 2%">
+            <img src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(@item.Image))" alt="image" style="margin-left: 30%; width: 40%"/>
+            <span class="badge" style="margin-left: 2%;">@item.NumberOfLikes</span>
+            <span>like(s)</span>
+        </div>
+    }
+</div>
+<div class="row text-center">
+    <h2 style="margin-top: 10%;">Recently uploaded images</h2>
+</div>
+<div id="results"></div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function errorFunc() {
+            alert('Error');
+        }
+
+        function successFunc() {
+            $("#results").load(url);
+            alert('Success');
+        }
+
+        $('input[type=file]').change(function(e) {
+
+            e.preventDefault();
+            var files = document.getElementById('uploadFile').files;
+
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var x = 0; x < files.length; x++) {
+                        data.append("file" + x, files[x]);
+                    }
+
+                    $.ajax({
+                        url: '@Url.Action("UploadPhotos", "Home")',
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        cache: false,
+                        dataType: 'html',
+                        success: function(res) {
+                            $("#results").append(res);
+                            alert("Photo sucessfully uploaded!");
+                        },
+                        error: function() {
+                            alert("An error occured!");
+                        }
+                    });
+                } else {
+                    alert("An error occured!");
+                }
+            }
+        });
+    </script>
+}

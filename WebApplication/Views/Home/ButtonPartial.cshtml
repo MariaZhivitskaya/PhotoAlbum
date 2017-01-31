@@ -1,0 +1,15 @@
+﻿@model WebApplication.ViewModels.UserViewModel
+
+@{
+    ViewBag.Title = "ButtonPartial";
+}
+
+@if (Model.Banned)
+{
+    <button type="submit" name="usrEmail" id="unban_btn" value="@Model.Email" class="btn btn-success">Unban user</button>
+}
+else
+{
+    <button type="submit" name="usrEmail" id="ban_btn" value="@Model.Email" class="btn btn-danger">Ban user</button>
+}
+

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<WebApplication.ViewModels.UserViewModel>
+
+<div style="margin-top: 5%">
+
+    <h3>Users</h3>
+
+    @foreach (var item in Model)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                <span>@item.Email</span>
+            </dt>
+            <dd>
+                @using (Ajax.BeginForm("BanUnban", "Home", new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    UpdateTargetId = @item.Id.ToString()
+                }))
+                {
+                    <div id="@item.Id">
+                        @{Html.RenderPartial("ButtonPartial", item);}
+                    </div>
+                }
+            </dd>
+        </dl>
+    }
+
+</div>

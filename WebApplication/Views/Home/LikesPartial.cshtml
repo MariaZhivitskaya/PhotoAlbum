@@ -1,0 +1,9 @@
+﻿@model WebApplication.ViewModels.ImageViewModel
+@{
+    ViewBag.Title = "LikesPartial";
+}
+
+<button type="submit" name="likeButton" id="like_btn" value="@Model.Id" disabled="@Model.HasEstimateOfCurUsr" 
+        class="btn btn-primary glyphicon glyphicon-thumbs-up" style="margin-left: 2%;"></button>
+<span class="badge">@Model.NumberOfLikes</span>
+
